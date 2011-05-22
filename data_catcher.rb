@@ -8,3 +8,8 @@ get '/log/:data' do |data|
   settings.cache.set 'log', log
   log
 end
+
+get '/reset' do
+  settings.cache.clear
+  'cleaned'
+end
