@@ -3,13 +3,13 @@ require 'sinatra'
 set :cache, Dalli::Client.new
 
 get '/log/:data' do |data|
-  log = settings.cache.get('log') || ''
-  log << data
-  settings.cache.set 'log', log
-  log
+  written = false
+  until written do
+    written = settings.cache.cas('log') { log + data }
+  end
 end
 
 get '/reset' do
-  settings.cache.clear
+  settings.cache.delete 'log'
   'cleaned'
 end
