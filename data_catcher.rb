@@ -6,7 +6,7 @@ get '/log/:data' do |data|
   written = false
   settings.cache.add 'log', ''
   until written do
-    written = settings.cache.cas('log') { log + data }
+    written = settings.cache.cas('log') { |log| log + data }
   end
 end
 
