@@ -2,7 +2,9 @@ require 'sinatra'
 
 set :cache, Dalli::Client.new
 
-get '/' do
-  settings.cache.set('color', 'blue')
-  settings.cache.get('color')
+get '/:data' do |data|
+  log = settings.cache.get 'log'
+  log << data
+  settings.cache.set 'log', log
+  log
 end
