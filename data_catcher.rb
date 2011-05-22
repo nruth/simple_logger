@@ -8,6 +8,7 @@ get '/log/:data' do |data|
   until written do
     written = settings.cache.cas('log') { |log| log + data }
   end
+  settings.cache.get 'log'
 end
 
 get '/reset' do
