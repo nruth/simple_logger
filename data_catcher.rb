@@ -5,7 +5,7 @@ set :cache, Dalli::Client.new
 get '/log' do
   settings.cache.add 'log', ''
   @log_data = settings.cache.get('log')
-  erb :log
+  erb :'log.html'
 end
 
 get '/log/:data' do |data|
