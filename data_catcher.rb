@@ -1,5 +1,8 @@
 require 'sinatra'
 
+set :cache, Dalli::Client.new
+
 get '/' do
-  "Hello World!"
+  settings.cache.set('color', 'blue')
+  settings.cache.get('color')
 end
